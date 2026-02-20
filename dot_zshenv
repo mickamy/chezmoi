@@ -1,0 +1,40 @@
+#
+# Defines environment variables.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Ensure that a non-login, non-interactive shell has a defined environment.
+if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprofile"
+fi
+
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# docker
+export PATH=$PATH:/Applications/Docker.app/Contents/Resources/cli-plugins
+
+# Android
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME:$ANDROID_HOME/emulator:$ANDROID_HOME/tools/:$ANDROID_HOME/platform-tools
+LATEST_BUILD_TOOLS_DIR=$(ls -v "$HOME/Library/Android/sdk/build-tools" | tail -n 1)
+export PATH="$HOME/Library/Android/sdk/build-tools/$LATEST_BUILD_TOOLS_DIR:$PATH"
+
+# gpg
+export GPG_TTY=$(tty)
+
+# JetBrains
+export PATH=$PATH:$HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
+
+# aws
+export AWS_DEFAULT_PROFILE="default"
+export AWS_CONFIG="$HOME/.aws"
+
+# curl
+export PATH="$(brew --prefix)/opt/curl/bin:$PATH"
+
+# go
+export PATH="$(go env GOPATH)/bin:$PATH"
+export GOPATH=$(go env GOPATH)
