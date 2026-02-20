@@ -1,0 +1,41 @@
+[core]
+	excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
+	editor = vim
+[alias]
+	alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort
+	br = branch
+	pl = pull
+	cm = commit
+	fe = fetch
+	ps = push
+	a = add
+	s = status
+	ss = status -s
+	co = checkout
+	st = stash
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[user]
+	email = tetsuro@mickamy.com
+	name = Tetsuro Mikami
+[commit]
+	template = {{ .chezmoi.homeDir }}/.stCommitMsg
+[ghq]
+	root = {{ .chezmoi.homeDir }}/ghq
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[pager]
+	branch = false
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[push]
+	autoSetupRemote = true
