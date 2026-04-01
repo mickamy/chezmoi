@@ -36,6 +36,9 @@ fzf-history-selection () {
   )
 
   if [ -n "$selected" ]; then
+    selected=$(printf "%s" "$selected" | sed 's/^[[:space:]]*//')
+    selected=$(printf "%s" "$selected" | sed 's/\\n/\n/g')
+
     BUFFER="$selected"
     CURSOR=$#BUFFER
   fi
