@@ -31,9 +31,6 @@ alias gitremovel="git branch --merged | grep -vE '^\*|master$|develop$|dev$|main
 # curl with header response
 alias curl-header='curl -D - -s -o /dev/null'
 
-# ghq look equivalent
-alias glook='peco-src'
-
 # aws-cdk
 alias cdk="npx aws-cdk"
 alias ecr-login="aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
