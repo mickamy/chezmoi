@@ -3,27 +3,48 @@
 #
 
 # Search ghq list
-peco-src () {
-    local repo=$(ghq list | peco --query "$LBUFFER")
-    if [ -n "$repo" ]; then
-        repo=$(ghq list --full-path --exact $repo)
-        BUFFER="cd ${repo}"
-        zle accept-line
-    fi
-    zle clear-screen
+fzf-src () {
+  local repo
+  repo=$(ghq list | fzf \
+    --query "$LBUFFER" \
+    --height 40% \
+    --reverse \
+    --preview 'ghq list --full-path {}' \
+  )
+
+  if [ -n "$repo" ]; then
+    repo=$(ghq list --full-path --exact "$repo")
+    BUFFER="cd ${repo}"
+    zle accept-line
+  fi
+
+  zle clear-screen
 }
-zle -N peco-src
-bindkey '^]' peco-src
+
+zle -N fzf-src
+bindkey '^]' fzf-src
 
 # Search history
-peco-history-selection () {
-    BUFFER=$(\history -n -r 1 | peco --query "$LBUFFER")
+fzf-history-selection () {
+  local selected
+
+  selected=$(history -n 1 | tac | fzf \
+    --query "$LBUFFER" \
+    --height 40% \
+    --reverse \
+    --tiebreak=index \
+  )
+
+  if [ -n "$selected" ]; then
+    BUFFER="$selected"
     CURSOR=$#BUFFER
-    zle clear-screen
+  fi
+
+  zle clear-screen
 }
 
-zle -N peco-history-selection
-bindkey '^R' peco-history-selection
+zle -N fzf-history-selection
+bindkey '^R' fzf-history-selection
 
 autoload -Uz promptinit
 promptinit
