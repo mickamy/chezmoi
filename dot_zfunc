@@ -51,22 +51,22 @@ promptinit
 prompt pure
 
 aws-session-token () {
-    output=$(aws sts get-session-token)
-    export AWS_ACCESS_KEY_ID=$(echo $output | jq -r .Credentials.AccessKeyId)
-    export AWS_SECRET_ACCESS_KEY=$(echo $output | jq -r .Credentials.SecretAccessKey)
-    export AWS_SESSION_TOKEN=$(echo $output | jq -r .Credentials.SessionToken)
+  output=$(aws sts get-session-token)
+  export AWS_ACCESS_KEY_ID=$(echo $output | jq -r .Credentials.AccessKeyId)
+  export AWS_SECRET_ACCESS_KEY=$(echo $output | jq -r .Credentials.SecretAccessKey)
+  export AWS_SESSION_TOKEN=$(echo $output | jq -r .Credentials.SessionToken)
 }
 
 switch-role () {
-   account_id=XXXXXXXXXXXX
-   role_name=YYYYYYYYYYYYY
-   role_arn="arn:aws:iam::${account_id}:role/${role_name}"
+  account_id=XXXXXXXXXXXX
+  role_name=YYYYYYYYYYYYY
+  role_arn="arn:aws:iam::${account_id}:role/${role_name}"
 
-   output=$(aws sts assume-role --role-arn ${role_name} --role-session ${role_name})
-   aws sts assume-role --role-arn ${role_arn} --role-session session
-   export AWS_ACCESS_KEY_ID=$(echo $output | jq -r .Credentials.AccessKeyId)
-   export AWS_SECRET_ACCESS_KEY=$(echo $output | jq -r .Credentials.SecretAccessKey)
-   export AWS_SESSION_TOKEN=$(echo $output | jq -r .Credentials.SessionToken)
+  output=$(aws sts assume-role --role-arn ${role_name} --role-session ${role_name})
+  aws sts assume-role --role-arn ${role_arn} --role-session session
+  export AWS_ACCESS_KEY_ID=$(echo $output | jq -r .Credentials.AccessKeyId)
+  export AWS_SECRET_ACCESS_KEY=$(echo $output | jq -r .Credentials.SecretAccessKey)
+  export AWS_SESSION_TOKEN=$(echo $output | jq -r .Credentials.SessionToken)
 }
 
 killport () {
