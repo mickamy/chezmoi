@@ -10,6 +10,10 @@ if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; t
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
 
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -17,10 +21,10 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH=$PATH:/Applications/Docker.app/Contents/Resources/cli-plugins
 
 # Android
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME:$ANDROID_HOME/emulator:$ANDROID_HOME/tools/:$ANDROID_HOME/platform-tools
-LATEST_BUILD_TOOLS_DIR=$(ls -v "$HOME/Library/Android/sdk/build-tools" | tail -n 1)
-export PATH="$HOME/Library/Android/sdk/build-tools/$LATEST_BUILD_TOOLS_DIR:$PATH"
+# export ANDROID_HOME=$HOME/Library/Android/sdk
+# export PATH=$PATH:$ANDROID_HOME:$ANDROID_HOME/emulator:$ANDROID_HOME/tools/:$ANDROID_HOME/platform-tools
+# LATEST_BUILD_TOOLS_DIR=$(ls -v "$HOME/Library/Android/sdk/build-tools" | tail -n 1)
+# export PATH="$HOME/Library/Android/sdk/build-tools/$LATEST_BUILD_TOOLS_DIR:$PATH"
 
 # gpg
 export GPG_TTY=$(tty)
@@ -32,9 +36,7 @@ export PATH=$PATH:$HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
 export AWS_DEFAULT_PROFILE="default"
 export AWS_CONFIG="$HOME/.aws"
 
-# curl
-export PATH="$(brew --prefix)/opt/curl/bin:$PATH"
-
 # go
 export PATH="$(go env GOPATH)/bin:$PATH"
 export GOPATH=$(go env GOPATH)
+
